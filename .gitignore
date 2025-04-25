@@ -1,0 +1,11 @@
+# Go build artifacts
+*.exe
+*.test
+*.out
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
