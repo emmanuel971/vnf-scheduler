@@ -5,15 +5,11 @@ import (
     "math"
 	"fmt"
 	"time"
-    "os"
     "log"
-    "path/filepath"
-    "k8s.io/client-go/tools/clientcmd"
 	"github.com/prometheus/client_golang/api"
 	promv1 "github.com/prometheus/client_golang/api/prometheus/v1"
 	"github.com/prometheus/common/model"
     "k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -192,18 +188,4 @@ func GetWorkers() ([]WorkerNode, error) {
 
 
 
-func loadKubeConfig() (*rest.Config, error) {
-	// Try in-cluster config
-	if config, err := rest.InClusterConfig(); err == nil {
-		return config, nil
-	}
-
-	// Fall back to local auth
-	kubeconfig := filepath.Join(os.Getenv("HOME"), ".kube", "config")
-	if _, err := os.Stat(kubeconfig); os.IsNotExist(err) {
-		kubeconfig = "/etc/kubernetes/admin.conf"
-	}
-
-	return clientcmd.BuildConfigFromFlags("", kubeconfig)
-}
 
